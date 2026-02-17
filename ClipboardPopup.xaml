@@ -1,0 +1,48 @@
+<Window x:Class="TopBar.ClipboardPopup"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Clipboard"
+        Width="320" Height="400"
+        WindowStartupLocation="Manual"
+        WindowStyle="None" AllowsTransparency="True"
+        Background="Transparent" ResizeMode="NoResize"
+        ShowInTaskbar="False" Topmost="True"
+        Deactivated="Window_Deactivated"
+        MouseEnter="Window_MouseEnter"
+        MouseLeave="Window_MouseLeave">
+
+    <Border Background="#01000000" BorderBrush="{DynamicResource PopupAccent}"
+            BorderThickness="1" CornerRadius="8" Padding="16,14">
+        <DockPanel>
+            <Grid DockPanel.Dock="Top" Margin="0,0,0,8">
+                <TextBlock Text="Clipboard History"
+                           Foreground="{DynamicResource PopupFgBright}" FontSize="14" FontWeight="SemiBold"
+                           VerticalAlignment="Center" />
+                <Button Content="Clear All" HorizontalAlignment="Right"
+                        Background="{DynamicResource PopupButtonBg}" Foreground="{DynamicResource PopupFgNormal}"
+                        BorderBrush="{DynamicResource PopupInputBorder}" FontSize="11"
+                        Padding="8,3" Click="ClearAll_Click" />
+            </Grid>
+
+            <ScrollViewer VerticalScrollBarVisibility="Auto"
+                          HorizontalScrollBarVisibility="Disabled">
+                <ItemsControl x:Name="ClipboardList">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Background="Transparent" CornerRadius="4"
+                                    Padding="8,6" Margin="0,1" Cursor="Hand"
+                                    MouseLeftButtonUp="Item_Click"
+                                    MouseEnter="Item_MouseEnter"
+                                    MouseLeave="Item_MouseLeave">
+                                <TextBlock Text="{Binding Text}"
+                                           Foreground="{DynamicResource PopupFgNormal}" FontSize="12"
+                                           TextWrapping="NoWrap"
+                                           TextTrimming="CharacterEllipsis" />
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </DockPanel>
+    </Border>
+</Window>

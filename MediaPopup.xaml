@@ -1,0 +1,70 @@
+<Window x:Class="TopBar.MediaPopup"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Media"
+        Width="320" Height="100"
+        WindowStartupLocation="Manual"
+        WindowStyle="None" AllowsTransparency="True"
+        Background="Transparent" ResizeMode="NoResize"
+        ShowInTaskbar="False" Topmost="True"
+        Deactivated="Window_Deactivated"
+        MouseEnter="Window_MouseEnter"
+        MouseLeave="Window_MouseLeave">
+
+    <Border Background="#01000000" BorderBrush="{DynamicResource PopupAccent}"
+            BorderThickness="1" CornerRadius="8" Padding="16,12">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Now playing info -->
+            <StackPanel Grid.Column="0" VerticalAlignment="Center" Margin="0,0,12,0">
+                <TextBlock x:Name="TrackTitle" Text="No media playing"
+                           Foreground="{DynamicResource PopupFgBright}" FontSize="13" FontWeight="SemiBold"
+                           TextTrimming="CharacterEllipsis"/>
+                <TextBlock x:Name="TrackArtist" Text=""
+                           Foreground="{DynamicResource PopupFgDim}" FontSize="11"
+                           TextTrimming="CharacterEllipsis"/>
+            </StackPanel>
+
+            <!-- Controls -->
+            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                <Border Background="Transparent" Cursor="Hand" Padding="6,4" CornerRadius="4"
+                        MouseLeftButtonUp="Prev_Click"
+                        MouseEnter="Btn_MouseEnter" MouseLeave="Btn_MouseLeave"
+                        x:Name="PrevBtn">
+                    <Viewbox Width="14" Height="14">
+                        <Canvas Width="24" Height="24">
+                            <Path Fill="{DynamicResource PopupFgNormal}" Data="M6 6h2v12H6zm3.5 6l8.5 6V6z"/>
+                        </Canvas>
+                    </Viewbox>
+                </Border>
+
+                <Border Background="Transparent" Cursor="Hand" Padding="6,4" CornerRadius="4"
+                        MouseLeftButtonUp="PlayPause_Click"
+                        MouseEnter="Btn_MouseEnter" MouseLeave="Btn_MouseLeave"
+                        x:Name="PlayPauseBtn">
+                    <Viewbox Width="16" Height="16">
+                        <Canvas Width="24" Height="24">
+                            <Path x:Name="PlayPauseIcon" Fill="{DynamicResource PopupFgNormal}"
+                                  Data="M8 5v14l11-7z"/>
+                        </Canvas>
+                    </Viewbox>
+                </Border>
+
+                <Border Background="Transparent" Cursor="Hand" Padding="6,4" CornerRadius="4"
+                        MouseLeftButtonUp="Next_Click"
+                        MouseEnter="Btn_MouseEnter" MouseLeave="Btn_MouseLeave"
+                        x:Name="NextBtn">
+                    <Viewbox Width="14" Height="14">
+                        <Canvas Width="24" Height="24">
+                            <Path Fill="{DynamicResource PopupFgNormal}" Data="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/>
+                        </Canvas>
+                    </Viewbox>
+                </Border>
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>

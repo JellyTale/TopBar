@@ -1,0 +1,210 @@
+<Window x:Class="TopBar.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="TopBar Settings"
+        Width="460" Height="560"
+        WindowStartupLocation="Manual"
+        WindowStyle="None" AllowsTransparency="True"
+        Background="Transparent" ResizeMode="NoResize"
+        ShowInTaskbar="False" Topmost="True"
+        Deactivated="Window_Deactivated"
+        MouseEnter="Window_MouseEnter"
+        MouseLeave="Window_MouseLeave">
+
+    <Border Background="#01000000" BorderBrush="{DynamicResource PopupAccent}"
+            BorderThickness="1" CornerRadius="8" Padding="20,16">
+        <DockPanel>
+            <!-- Title -->
+            <TextBlock DockPanel.Dock="Top" Text="Settings"
+                       Foreground="{DynamicResource PopupFgBright}" FontSize="16" FontWeight="SemiBold"
+                       Margin="0,0,0,12"/>
+
+            <!-- Tab buttons -->
+            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,14">
+                <Border x:Name="TabGeneral" Background="{DynamicResource PopupAccent}" CornerRadius="4"
+                        Padding="10,4" Margin="0,0,4,0" Cursor="Hand"
+                        MouseLeftButtonUp="Tab_Click" Tag="General">
+                    <TextBlock Text="General" Foreground="{DynamicResource PopupFgBright}" FontSize="12"/>
+                </Border>
+                <Border x:Name="TabAppearance" Background="Transparent" CornerRadius="4"
+                        Padding="10,4" Margin="0,0,4,0" Cursor="Hand"
+                        MouseLeftButtonUp="Tab_Click" Tag="Appearance">
+                    <TextBlock Text="Appearance" Foreground="{DynamicResource PopupFgLabel}" FontSize="12"/>
+                </Border>
+                <Border x:Name="TabModules" Background="Transparent" CornerRadius="4"
+                        Padding="10,4" Cursor="Hand"
+                        MouseLeftButtonUp="Tab_Click" Tag="Modules">
+                    <TextBlock Text="Modules" Foreground="{DynamicResource PopupFgLabel}" FontSize="12"/>
+                </Border>
+            </StackPanel>
+
+            <!-- Separator -->
+            <Border DockPanel.Dock="Top" Background="{DynamicResource PopupSeparator}" Height="1" Margin="0,0,0,14"/>
+
+            <!-- Content area -->
+            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                <Grid>
+                    <!-- General Tab -->
+                    <StackPanel x:Name="PanelGeneral">
+                        <TextBlock Text="Bar Name" Foreground="{DynamicResource PopupFgLabel}" FontSize="11" Margin="0,0,0,4"/>
+                        <TextBox x:Name="NameBox" FontSize="13" Padding="6,4"
+                                 Background="{DynamicResource PopupInputBg}" Foreground="{DynamicResource PopupInputFg}"
+                                 BorderBrush="{DynamicResource PopupInputBorder}" CaretBrush="{DynamicResource PopupInputFg}" Margin="0,0,0,14"/>
+
+                        <Grid Margin="0,0,0,14">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Don't hide top bar" Foreground="{DynamicResource PopupFgBright}" FontSize="13" VerticalAlignment="Center"/>
+                            <CheckBox x:Name="AlwaysVisibleCheckBox" Grid.Column="1" VerticalAlignment="Center"/>
+                        </Grid>
+
+                        <Grid Margin="0,0,0,14">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Push windows down" Foreground="{DynamicResource PopupFgBright}" FontSize="13" VerticalAlignment="Center"/>
+                            <CheckBox x:Name="PushCheckBox" Grid.Column="1" VerticalAlignment="Center"/>
+                        </Grid>
+
+                        <TextBlock Foreground="{DynamicResource PopupFgLabel}" FontSize="11" Margin="0,0,0,4">
+                            <Run Text="Reveal delay: "/><Run x:Name="DelayLabel" Text="500"/><Run Text=" ms"/>
+                        </TextBlock>
+                        <Slider x:Name="DelaySlider" Minimum="0" Maximum="1000"
+                                TickFrequency="50" IsSnapToTickEnabled="True"
+                                ValueChanged="DelaySlider_ValueChanged" Margin="0,0,0,14"/>
+
+                        <Grid Margin="0,0,0,14">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Run at startup" Foreground="{DynamicResource PopupFgBright}" FontSize="13" VerticalAlignment="Center"/>
+                            <CheckBox x:Name="StartupCheckBox" Grid.Column="1" VerticalAlignment="Center"/>
+                        </Grid>
+
+                        <TextBlock Text="Keyboard shortcut" Foreground="{DynamicResource PopupFgLabel}" FontSize="11" Margin="0,0,0,4"/>
+                        <TextBox x:Name="ShortcutBox" FontSize="13" Padding="6,4"
+                                 Background="{DynamicResource PopupInputBg}" Foreground="{DynamicResource PopupInputFg}"
+                                 BorderBrush="{DynamicResource PopupInputBorder}" CaretBrush="{DynamicResource PopupInputFg}"
+                                 ToolTip="e.g. Ctrl+Shift+T"/>
+
+                        <TextBlock Text="Clipboard shortcut" Foreground="{DynamicResource PopupFgLabel}" FontSize="11" Margin="0,14,0,4"/>
+                        <TextBox x:Name="ClipShortcutBox" FontSize="13" Padding="6,4"
+                                 Background="{DynamicResource PopupInputBg}" Foreground="{DynamicResource PopupInputFg}"
+                                 BorderBrush="{DynamicResource PopupInputBorder}" CaretBrush="{DynamicResource PopupInputFg}"
+                                 ToolTip="e.g. Ctrl+Shift+V"/>
+                    </StackPanel>
+
+                    <!-- Appearance Tab -->
+                    <StackPanel x:Name="PanelAppearance" Visibility="Collapsed">
+                        <Grid Margin="0,0,0,14">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Animate popups (slide)" Foreground="{DynamicResource PopupFgBright}" FontSize="13" VerticalAlignment="Center"/>
+                            <CheckBox x:Name="AnimateCheckBox" Grid.Column="1" VerticalAlignment="Center"/>
+                        </Grid>
+
+                        <TextBlock Text="Bar color" Foreground="{DynamicResource PopupFgLabel}" FontSize="11" Margin="0,0,0,4"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,14">
+                            <Border x:Name="ColorPreview" Width="28" Height="28"
+                                    CornerRadius="4" BorderBrush="{DynamicResource PopupInputBorder}" BorderThickness="1"
+                                    Background="#BF000000" Margin="0,0,8,0" Cursor="Hand"
+                                    MouseLeftButtonUp="ColorPreview_Click"
+                                    ToolTip="Click to pick a colour"/>
+                            <TextBox x:Name="ColorBox" Width="100" FontSize="13" Padding="6,4"
+                                     Background="{DynamicResource PopupInputBg}" Foreground="{DynamicResource PopupInputFg}"
+                                     BorderBrush="{DynamicResource PopupInputBorder}" CaretBrush="{DynamicResource PopupInputFg}"
+                                     TextChanged="ColorBox_TextChanged"
+                                     ToolTip="#AARRGGBB hex color"/>
+                        </StackPanel>
+
+                        <TextBlock Text="Presets" Foreground="{DynamicResource PopupFgLabel}" FontSize="11" Margin="0,0,0,6"/>
+                        <WrapPanel Margin="0,0,0,8">
+                            <Border Width="24" Height="24" CornerRadius="4" Margin="0,0,4,4"
+                                    Background="#BF000000" Cursor="Hand" MouseLeftButtonUp="Preset_Click" Tag="#BF000000"/>
+                            <Border Width="24" Height="24" CornerRadius="4" Margin="0,0,4,4"
+                                    Background="#BF1A1A2E" Cursor="Hand" MouseLeftButtonUp="Preset_Click" Tag="#BF1A1A2E"/>
+                            <Border Width="24" Height="24" CornerRadius="4" Margin="0,0,4,4"
+                                    Background="#BF0D1B2A" Cursor="Hand" MouseLeftButtonUp="Preset_Click" Tag="#BF0D1B2A"/>
+                            <Border Width="24" Height="24" CornerRadius="4" Margin="0,0,4,4"
+                                    Background="#BF1B2D1A" Cursor="Hand" MouseLeftButtonUp="Preset_Click" Tag="#BF1B2D1A"/>
+                            <Border Width="24" Height="24" CornerRadius="4" Margin="0,0,4,4"
+                                    Background="#BF2D1A1A" Cursor="Hand" MouseLeftButtonUp="Preset_Click" Tag="#BF2D1A1A"/>
+                            <Border Width="24" Height="24" CornerRadius="4" Margin="0,0,4,4"
+                                    Background="#BF2D2A1A" Cursor="Hand" MouseLeftButtonUp="Preset_Click" Tag="#BF2D2A1A"/>
+                            <Border Width="24" Height="24" CornerRadius="4" Margin="0,0,4,4"
+                                    Background="#BF1A2D2D" Cursor="Hand" MouseLeftButtonUp="Preset_Click" Tag="#BF1A2D2D"/>
+                            <Border Width="24" Height="24" CornerRadius="4" Margin="0,0,4,4"
+                                    Background="#BF2D1A2D" Cursor="Hand" MouseLeftButtonUp="Preset_Click" Tag="#BF2D1A2D"/>
+                            <Border Width="24" Height="24" CornerRadius="4" Margin="0,0,4,4"
+                                    Background="#60FFFFFF" Cursor="Hand" MouseLeftButtonUp="Preset_Click" Tag="#60FFFFFF"/>
+                        </WrapPanel>
+                    </StackPanel>
+
+                    <!-- Modules Tab (unified: toggle + drag-to-reorder) -->
+                    <StackPanel x:Name="PanelModules" Visibility="Collapsed">
+                        <TextBlock Text="Toggle and drag to reorder bar items."
+                                   Foreground="{DynamicResource PopupFgLabel}" FontSize="11" Margin="0,0,0,8"
+                                   TextWrapping="Wrap"/>
+
+                        <!-- Active window title is separate (not in the right panel order) -->
+                        <Grid Margin="0,0,0,8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Active Window Title (centre)" Foreground="{DynamicResource PopupFgBright}" FontSize="13" VerticalAlignment="Center"/>
+                            <CheckBox x:Name="ModWindowTitle" Grid.Column="1" VerticalAlignment="Center"/>
+                        </Grid>
+                        <Border Background="{DynamicResource PopupSeparator}" Height="1" Margin="0,0,0,10"/>
+
+                        <TextBlock Text="Right-side items  (top = leftmost on bar)"
+                                   Foreground="{DynamicResource PopupFgDim}" FontSize="11" Margin="0,0,0,6"/>
+
+                        <ListBox x:Name="LayoutList"
+                                 Background="Transparent" BorderThickness="0"
+                                 Foreground="{DynamicResource PopupFgBright}"
+                                 AllowDrop="True"
+                                 PreviewMouseLeftButtonDown="LayoutList_PreviewMouseDown"
+                                 PreviewMouseMove="LayoutList_PreviewMouseMove"
+                                 Drop="LayoutList_Drop">
+                            <ListBox.ItemContainerStyle>
+                                <Style TargetType="ListBoxItem">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Setter Property="Foreground" Value="{DynamicResource PopupFgBright}"/>
+                                    <Setter Property="Padding" Value="0"/>
+                                    <Setter Property="Margin" Value="0,1"/>
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="ListBoxItem">
+                                                <Border Background="{TemplateBinding Background}"
+                                                        CornerRadius="4" Padding="8,6"
+                                                        Margin="{TemplateBinding Margin}">
+                                                    <ContentPresenter HorizontalAlignment="Stretch"/>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter Property="Background" Value="{DynamicResource PopupAccent}"/>
+                                        </Trigger>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="{DynamicResource PopupHoverBg}"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ListBox.ItemContainerStyle>
+                        </ListBox>
+                    </StackPanel>
+                </Grid>
+            </ScrollViewer>
+        </DockPanel>
+    </Border>
+</Window>

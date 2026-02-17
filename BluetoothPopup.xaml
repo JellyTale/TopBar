@@ -1,0 +1,40 @@
+<Window x:Class="TopBar.BluetoothPopup"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Bluetooth"
+        Width="280" Height="120"
+        WindowStartupLocation="Manual"
+        WindowStyle="None" AllowsTransparency="True"
+        Background="Transparent" ResizeMode="NoResize"
+        ShowInTaskbar="False" Topmost="True"
+        Deactivated="Window_Deactivated"
+        MouseEnter="Window_MouseEnter"
+        MouseLeave="Window_MouseLeave">
+
+    <Border Background="#01000000" BorderBrush="{DynamicResource PopupAccent}"
+            BorderThickness="1" CornerRadius="8" Padding="16,14">
+        <StackPanel>
+            <TextBlock Text="Bluetooth" Foreground="{DynamicResource PopupFgLabel}" FontSize="11" Margin="0,0,0,8"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="StatusText" Grid.Column="0"
+                           Foreground="{DynamicResource PopupFgBright}" FontSize="13"
+                           VerticalAlignment="Center"/>
+                <Border Grid.Column="1" Background="{DynamicResource PopupButtonBg}" CornerRadius="4"
+                        Padding="10,4" Cursor="Hand"
+                        MouseLeftButtonUp="OpenSettings_Click">
+                    <TextBlock Text="Open Settings" Foreground="{DynamicResource PopupFgNormal}" FontSize="12"/>
+                </Border>
+            </Grid>
+            <Border Background="{DynamicResource PopupButtonBg}" CornerRadius="4" Padding="10,4"
+                    Margin="0,8,0,0" Cursor="Hand" HorizontalAlignment="Left"
+                    MouseLeftButtonUp="Toggle_Click"
+                    x:Name="ToggleButton">
+                <TextBlock x:Name="ToggleText" Foreground="{DynamicResource PopupFgNormal}" FontSize="12"/>
+            </Border>
+        </StackPanel>
+    </Border>
+</Window>
